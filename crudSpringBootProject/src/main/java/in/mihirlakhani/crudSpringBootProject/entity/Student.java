@@ -1,20 +1,27 @@
 package in.mihirlakhani.crudSpringBootProject.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private int age;
     private int rollNo;
     private String subject;
+    private Boolean deleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public void setId(Long id) {
         this.id = id;
@@ -44,6 +51,10 @@ public class Student {
         this.subject = subject;
     }
 
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,5 +73,25 @@ public class Student {
 
     public String getSubject() {
         return subject;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
