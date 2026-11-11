@@ -6,6 +6,7 @@ import in.mihirlakhani.crudSpringBootProject.dto.UpdateStudentRequestDTO;
 import in.mihirlakhani.crudSpringBootProject.dto.UpdateStudentResponseDTO;
 import in.mihirlakhani.crudSpringBootProject.entity.Student;
 import in.mihirlakhani.crudSpringBootProject.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateStudentResponseDTO> createStudent(@RequestBody CreateStudentRequestDTO createStudentRequestDTO){
+    public ResponseEntity<CreateStudentResponseDTO> createStudent(@Valid @RequestBody CreateStudentRequestDTO createStudentRequestDTO){
 
         System.out.println("Inside " + this.getClass().getSimpleName());
 
@@ -42,17 +43,12 @@ public class StudentController {
 
     @GetMapping("{id}")
     public ResponseEntity<CreateStudentResponseDTO> getStudent(@PathVariable Long id){
-        Optional<CreateStudentResponseDTO> studentResp = studentService.getStudent(id);
+        CreateStudentResponseDTO studentResp = studentService.getStudent(id);
 
-        if(!studentResp.isPresent()){
-            return ResponseEntity
-                    .status(404)
-                    .build();
-        }
 
         return ResponseEntity
                 .status(200)
-                .body(studentResp.get());
+                .body(studentResp);
     }
 
     @GetMapping

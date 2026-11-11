@@ -64,13 +64,18 @@ public class StudentService {
         return student;
     }
 
-    public Optional<CreateStudentResponseDTO> getStudent(Long id){
 
 
-        Optional<Student> studentResponse = studentRepository.findByIdAndDeletedFalse(id);
+    public CreateStudentResponseDTO getStudent(Long id){
 
-        return studentResponse.map(student -> entityToDto(student));
+
+        Student studentResponse = studentRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        return entityToDto(studentResponse);
     }
+
+
 
     public List<CreateStudentResponseDTO> getAllStudent(){
 
