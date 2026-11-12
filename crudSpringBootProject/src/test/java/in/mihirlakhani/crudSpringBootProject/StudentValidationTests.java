@@ -4,7 +4,8 @@ import in.mihirlakhani.crudSpringBootProject.controller.StudentController;
 import in.mihirlakhani.crudSpringBootProject.dto.CreateStudentRequestDTO;
 import in.mihirlakhani.crudSpringBootProject.dto.CreateStudentResponseDTO;
 import in.mihirlakhani.crudSpringBootProject.exception.GlobalExceptionHandler;
-import in.mihirlakhani.crudSpringBootProject.service.StudentService;
+import in.mihirlakhani.crudSpringBootProject.service.StudentServiceImpl;
+import in.mihirlakhani.crudSpringBootProject.service.StudentServiceLogging;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -17,12 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class StudentValidationTests {
-    private StudentService service;
+    private StudentServiceLogging service;
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
-        service = mock(StudentService.class);
+        service = mock(StudentServiceLogging.class);
         mvc = MockMvcBuilders.standaloneSetup(new StudentController(service))
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();

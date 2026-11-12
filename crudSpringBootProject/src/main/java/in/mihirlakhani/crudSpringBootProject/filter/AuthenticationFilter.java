@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.*;
 
-@Component
-@Order(1)
+//@Component
+//@Order(1)
 public class AuthenticationFilter implements Filter {
 
     @Override
@@ -23,17 +23,17 @@ public class AuthenticationFilter implements Filter {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
             String token = httpServletRequest.getHeader("token");
-            if (!"12345".equals(token)) {
-                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                httpServletResponse.setContentType("application/json");
-                httpServletResponse.setCharacterEncoding("UTF-8");
-
-                httpServletResponse.getWriter().write(
-                        "{\"issue\":\"Could not authenticate token\"}"
-                );
-
-                return; // Stop: do not pass this request further
-            }
+//            if (!"12345".equals(token)) {
+//                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                httpServletResponse.setContentType("application/json");
+//                httpServletResponse.setCharacterEncoding("UTF-8");
+//
+//                httpServletResponse.getWriter().write(
+//                        "{\"issue\":\"Could not authenticate token\"}"
+//                );
+//
+//                return; // Stop: do not pass this request further
+//            }
 
             chain.doFilter(httpServletRequest, httpServletResponse);
         } finally {

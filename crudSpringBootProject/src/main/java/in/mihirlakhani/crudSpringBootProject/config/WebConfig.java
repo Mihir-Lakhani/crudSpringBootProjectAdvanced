@@ -10,10 +10,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     LoggingInterceptor loggingInterceptor;
 
+    public WebConfig(LoggingInterceptor loggingInterceptor) {
+        this.loggingInterceptor = loggingInterceptor;
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoggingInterceptor())
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/auth/login", "api/public/**");
+        registry.addInterceptor(loggingInterceptor);
+//                .addPathPatterns("/api/**")
+//                .excludePathPatterns("/api/auth/login", "api/public/**");
     }
 }

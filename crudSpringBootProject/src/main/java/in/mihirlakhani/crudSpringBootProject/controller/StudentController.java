@@ -4,11 +4,10 @@ import in.mihirlakhani.crudSpringBootProject.dto.CreateStudentRequestDTO;
 import in.mihirlakhani.crudSpringBootProject.dto.CreateStudentResponseDTO;
 import in.mihirlakhani.crudSpringBootProject.dto.UpdateStudentRequestDTO;
 import in.mihirlakhani.crudSpringBootProject.dto.UpdateStudentResponseDTO;
-import in.mihirlakhani.crudSpringBootProject.entity.Student;
-import in.mihirlakhani.crudSpringBootProject.service.StudentService;
+import in.mihirlakhani.crudSpringBootProject.service.StudentServiceImpl;
+import in.mihirlakhani.crudSpringBootProject.service.StudentServiceLogging;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -17,10 +16,10 @@ import java.util.*;
 @RequestMapping("api/students")
 public class StudentController {
 
-    private StudentService studentService;
+    private StudentServiceLogging studentServiceLogging;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    public StudentController(StudentServiceLogging studentServiceLogging) {
+        this.studentServiceLogging = studentServiceLogging;
     }
 
     @PostMapping
@@ -28,7 +27,7 @@ public class StudentController {
 
         System.out.println("Inside " + this.getClass().getSimpleName());
 
-        CreateStudentResponseDTO createdStudent = studentService.createStudent(createStudentRequestDTO);
+        CreateStudentResponseDTO createdStudent = studentServiceLogging.createStudent(createStudentRequestDTO);
 
         if (createdStudent == null){
             return ResponseEntity
@@ -43,7 +42,7 @@ public class StudentController {
 
     @GetMapping("{id}")
     public ResponseEntity<CreateStudentResponseDTO> getStudent(@PathVariable Long id){
-        CreateStudentResponseDTO studentResp = studentService.getStudent(id);
+        CreateStudentResponseDTO studentResp = studentServiceLogging.getStudent(id);
 
 
         return ResponseEntity
@@ -53,7 +52,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<CreateStudentResponseDTO>> getAllStudents(){
-        List<CreateStudentResponseDTO> studentList= studentService.getAllStudent();
+        List<CreateStudentResponseDTO> studentList= studentServiceLogging.getAllStudent();
 
         if (studentList.isEmpty()){
             return ResponseEntity
@@ -69,7 +68,7 @@ public class StudentController {
     @PutMapping("{id}")
     public ResponseEntity<UpdateStudentResponseDTO> updateStudent(@PathVariable Long id,
                                                                   @RequestBody UpdateStudentRequestDTO updateStudentRequestDTO){
-        UpdateStudentResponseDTO updateStudentResponseDTO = studentService.updateStudent(id, updateStudentRequestDTO);
+        UpdateStudentResponseDTO updateStudentResponseDTO = studentServiceLogging.updateStudent(id, updateStudentRequestDTO);
 
         if (updateStudentResponseDTO == null){
             return ResponseEntity
@@ -82,10 +81,10 @@ public class StudentController {
                 .body(updateStudentResponseDTO);
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
 
-        Boolean isDeleted = studentService.deleteStudent(id);
+        Boolean isDeleted = studentServiceLogging.deleteStudent(id);
 
         if (!isDeleted){
             return ResponseEntity
